@@ -1,0 +1,143 @@
+/* Editor Base Template */
+
+:root {
+  --yellow: #ffc600;
+  --black: #272727;
+  --blue: #203b60;
+  --white: #ffffff;
+  --orange: #ff8f1f;
+  --green: #1ceb3b;
+}
+
+html {
+  /* border-box box model allows us to add padding and border to our elements without increasing their size */
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 900;
+  font-size: 10px;
+  color: var(--black);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.07);
+}
+
+/*We inherit box-sizing: border-box; from our <html> selector
+      Apparently this is a bit better than applying box-sizing: border-box; directly to the * selector
+    */
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-image: url("./assests/topography"),
+    linear-gradient(110deg, #f93d66, #6d47d9);
+  background-size: 340px, auto;
+  min-height: calc(100vh - 100px);
+  margin: 20px;
+  background-attachment: fixed;
+  letter-spacing: -1px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 5px 0;
+}
+
+/* Base styles for the calculator */
+.calc {
+  /* Styles for the main calculator container */
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.calc__container {
+  /* Styles for the inner container */
+  border: 10px solid rgba(47, 47, 47, 1);
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-template-rows: minmax(100px, auto) repeat(5, 80px);
+  gap: 2px;
+}
+
+.calc__display {
+  /* Styles for the display area */
+  display: grid;
+  grid-column: 1 / -1;
+  justify-content: center;
+  align-items: center;
+  font-size: x-large;
+  letter-spacing: 14px;
+  background: linear-gradient(110deg, #ffc600, #6d47d9);
+  opacity: 0.9;
+  color: var(--black);
+  font-weight: 800;
+}
+
+.calc__button {
+  /* Base styles for all buttons */
+  margin: 1px;
+  border-radius: 5%;
+  border: none;
+  font-weight: initial;
+  font-size: 2em;
+  font-family: monospace;
+}
+
+.calc__button--sign {
+  /* Styles for the sign button */
+  background-color: var(--green);
+  opacity: 0.7;
+}
+
+.calc__button--percent {
+  /* Styles for the percent button */
+  background-color: var(--green);
+  opacity: 0.7;
+}
+
+.calc__button--operator {
+  /* Styles for the operator buttons */
+  background-color: var(--orange);
+  opacity: 0.9;
+}
+
+.calc__button--operand {
+  /* Styles for the operand buttons */
+  background-color: var(--blue);
+  opacity: 0.8;
+  color: var(--white);
+}
+
+.calc__button--clear {
+  /* Styles for the clear button */
+  background-color: var(--green);
+  opacity: 0.7;
+}
+
+.calc__button--decimal {
+  /* Styles for the decimal button */
+  /* Styles for the operator buttons */
+  background-color: var(--yellow);
+  opacity: 0.8;
+}
+
+.calc__button--equals {
+  /* Styles for the equals button */
+  /* Styles for the operator buttons */
+  background-color: var(--orange);
+}
+
+.calc__button--zero {
+  /* Styles for the zero button */
+  grid-column: span 2;
+}
