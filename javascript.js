@@ -14,7 +14,6 @@ Guidance: Implement logic to distinguish between input stages (first operand, op
 3. and then operate() on the two numbers when the user presses the “=” key. 
 4. once operate() has been called, update the display with the ‘solution’ to the operation.
 */
-
 /* CONTAINER */
 const innerContainer = document.getElementsByClassName(".calc__container");
 
@@ -71,115 +70,105 @@ function operate(operator, x, y) {
   }
 }
 
-/* STATE MANAGEMENT
-
-Event Handling for Numbers and Operators: Use separate event listeners for numbers and operators to update the state.*/
-
-// USE state object to manage the current state of the calculator
-let state = {
-  firstOperand: "",
-  operator: "",
-  secondOperand: "",
-  result: null,
-};
-
-const handleNumberClick = (number) => {
-  if (state.operator === "") {
-    state.firstOperand += number;
-  } else {
-    state.secondOperand += number;
-  }
-  updateDisplay();
-};
-
-const handleOperatorClick = (operator) => {
-  if (state.firstOperand !== "") {
-    state.operator = operator;
-  }
-  updateDisplay();
-};
-
-/* // FUNCTION: Perform the calculation when the equals button is clicked
-const calculate = () => {
-  let firstOperand = 0;
-  let operator = "";
-  let secondOperand = 0;
-
-  // CALL FUNCTION operate and STORE RESULT
-  result = operate(Number(firstOperand), Number(secondOperand), operator);
-
-  console.log(result);
-};
-updateDisplay(); */
-
 /* DISPLAY */
 
 // FUNCTION: populate the display when you click the corresponding buttons
 const displayScreen = () => {
+  /* STATE MANAGEMENT */
+
   // STORE display value
   let displayValue = ""; // INITIALIZE as empty string
 
-  // SELECT display
-  const displayDiv = document.querySelector(".calc__display");
-
-  /* GET OPERANDS: 1 & 2 */
-
-  const getOperand = () => {
-    // SELECT all number buttons
-    const getBtnOperand = document.querySelectorAll(".calc__button--operand");
-
-    // ADD event listeners to each number button
-    getBtnOperand.forEach((button) => {
-      button.addEventListener("click", (event) => {
-        // APPEND number button's value to the display
-        displayValue += event.target.value;
-        console.log(displayValue);
-
-        // UPDATE the display's text content
-        displayDiv.innerText = displayValue;
-        console.log(displayValue);
-      });
-    });
+  // USE state object to manage the current state of the calculator
+  let state = {
+    firstOperand: "",
+    operator: "",
+    secondOperand: "",
+    result: null,
   };
-  getOperand();
 
-  /* GET OPERATOR */
+  /* EVENT HANDLERS */
 
-  const getOperator = () => {
-    // SELECT all operator buttons
-    const getBtnOperator = document.querySelectorAll(".calc__button--operator");
-
-    // ADD event listeners to each operator button
-    getBtnOperator.forEach((button) => {
-      button.addEventListener("click", (event) => {
-        // APPEND operator button's value to the display
-        displayValue += event.target.value;
-        console.log(displayValue);
-
-        // UPDATE the display's text content
-        displayDiv.innerText = displayValue;
-        console.log(displayValue);
-      });
-    });
+  const updateDisplay = () => {
+    const displayDiv = document.querySelector(".calc__display");
+    displayDiv.innerText = displayValue;
   };
-  getOperator();
 
-  const equalsOperator = () => {
-    // SELECT equals button
-    const getEqualsOperator = document.querySelector(".calc__button--equals");
+  const handleNumberClick = (eventNumber) => {
+    const number = eventNumber.target.innerText;
+    displayValue += number;
 
-    // ADD event listener to equals button
-    getEqualsOperator.addEventListener("click", (event) => {
-      // APPEND operator button's value to the display
-      displayValue += event.target.value;
-      console.log(displayValue);
+    if (state.operator) {
+      state.secondOperand += number;
+    } else {
+      state.firstOperand += number;
+    }
 
-      // UPDATE the display's text content
-      displayDiv.innerText = displayValue;
-      console.log(displayValue);
-    });
+    console.log("numbers clicked:", number);
+    console.log("State after number click", state);
+    updateDisplay();
   };
-  equalsOperator();
+
+  const handleOperatorClick = (eventOperator) => {
+    const operator = eventOperator.target.innerText;
+    displayValue += operator;
+
+    if (state.firstOperand && !state.secondOperand) {
+      state.operator = operator;
+      displayValue += operator;
+      console.log("Operator clicked", operator);
+      console.log("State after operator click", state);
+      updateDisplay();
+    } else {
+      console.log("Invalid operation sequence");
+    }
+  };
+
+  const handleEqualsClick = () => {
+    if (
+      state.firstOperand !== "" &&
+      state.operator !== "" &&
+      state.secondOperand !== ""
+    ) {
+      state.result = operate(
+        state.operator,
+        Number(state.firstOperand),
+        Number(state.secondOperand)
+      );
+
+      displayValue = state.result;
+      console.log("Equals clicked. Result:", state.result);
+      console.log("State after equals click:", state);
+      updateDisplay();
+
+      // Reset state for next calculation
+      state.firstOperand = state.result;
+      state.operator = "";
+      state.secondOperand = "";
+      state.result = null;
+    } else {
+      console.log("Incomplete operation");
+    }
+  };
+
+  /* BUTTON: OPERAND */
+  const getBtnOperand = document.querySelectorAll(".calc__button--operand");
+  // ADD event listeners to each number button
+  getBtnOperand.forEach((button) => {
+    button.addEventListener("click", handleNumberClick);
+  });
+
+  /* BUTTON: OPERATOR */
+  const getBtnOperator = document.querySelectorAll(".calc__button--operator");
+  // ADD event listeners to each operator button
+  getBtnOperator.forEach((button) => {
+    button.addEventListener("click", handleOperatorClick);
+  });
+
+  /* BUTTON: EQUALS */
+  const getEqualsOperator = document.querySelector(".calc__button--equals");
+  // ADD event listener to equals button
+  getEqualsOperator.addEventListener("click", handleEqualsClick);
 };
 
 displayScreen();
