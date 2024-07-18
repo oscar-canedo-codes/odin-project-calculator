@@ -6,7 +6,7 @@
   --blue: #203b60;
   --white: #ffffff;
   --orange: #ff8f1f;
-  --green: #1ceb3b;
+  --cloudblue: #6f7fbf;
 }
 
 html {
@@ -79,7 +79,8 @@ h6 {
   letter-spacing: 14px;
   background: linear-gradient(110deg, #ffc600, #6d47d9);
   opacity: 0.9;
-  color: var(--black);
+  color: var(--white);
+  text-shadow: var(--black);
   font-weight: 800;
 }
 
@@ -95,14 +96,14 @@ h6 {
 
 .calc__button--sign {
   /* Styles for the sign button */
-  background-color: var(--green);
-  opacity: 0.7;
+  background-color: var(--cloudblue);
+  opacity: 0.8;
 }
 
 .calc__button--percent {
   /* Styles for the percent button */
-  background-color: var(--green);
-  opacity: 0.7;
+  background-color: var(--cloudblue);
+  opacity: 0.8;
 }
 
 .calc__button--operator {
@@ -120,20 +121,18 @@ h6 {
 
 .calc__button--clear {
   /* Styles for the clear button */
-  background-color: var(--green);
-  opacity: 0.7;
+  background-color: var(--cloudblue);
+  opacity: 0.8;
 }
 
 .calc__button--decimal {
   /* Styles for the decimal button */
-  /* Styles for the operator buttons */
   background-color: var(--yellow);
   opacity: 0.8;
 }
 
 .calc__button--equals {
   /* Styles for the equals button */
-  /* Styles for the operator buttons */
   background-color: var(--orange);
 }
 
